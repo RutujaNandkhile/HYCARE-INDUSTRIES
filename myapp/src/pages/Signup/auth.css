@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+* {
+  font-family: 'Montserrat', sans-serif;
+  box-sizing: border-box;
+}
+
+/* Background */
+.login-page {
+  min-height: 100vh;
+  background: #7987C2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Main Signup Card */
+.login-page .card {
+  width: 900px !important;
+  height: 550px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+  padding: 0 !important;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* LEFT IMAGE PANEL */
+.login-page .card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: url("https://images.unsplash.com/photo-1535223289827-42f1e9919769")
+    center/cover no-repeat;
+}
+
+/* Right side content */
+.login-page .card h4,
+.login-page .card form {
+  width: 50%;
+  margin-left: 50%;
+  padding: 0 60px;
+  position: relative;
+}
+
+/* Title */
+.login-page .card h4 {
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+/* Form */
+.login-page .card form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Inputs */
+.login-page .form-control {
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  margin-bottom: 15px;
+}
+
+.login-page .form-control:focus {
+  border-color: #3348A2;
+  box-shadow: none;
+}
+
+/* Button */
+.login-page .btn-primary {
+  background: #3348A2;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.login-page .btn-primary:hover {
+  background: #24337a;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+
+  .login-page .card {
+    width: 95% !important;
+    height: auto;
+  }
+
+  .login-page .card::before {
+    position: relative;
+    width: 100%;
+    height: 200px;
+  }
+
+  .login-page .card h4,
+  .login-page .card form {
+    width: 100%;
+    margin-left: 0;
+    padding: 20px;
+  }
+}

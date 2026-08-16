@@ -1,0 +1,27 @@
+.faq-section {
+  background: radial-gradient(circle at center, #f5dada 0%, #b0c4e0 100%);
+}
+
+.accordion-item {
+  background: #ffffff;
+}
+
+.accordion-button {
+  font-weight: 600;
+  padding: 1.25rem 1.5rem;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #fff3e6;
+  color: #000;
+  box-shadow: none;
+}
+
+.accordion-body {
+  padding: 1.25rem 1.5rem;
+  line-height: 1.7;
+}
+.Comman-Question {
+    text-align: center;
+    margin-left: 20px;
+}

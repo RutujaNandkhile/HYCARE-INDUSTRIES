@@ -1,0 +1,135 @@
+/* ==========================================================
+   Register — matches Photo / Users / Slider dashboard theme
+   (graphite / slate / amber industrial palette)
+   ========================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap");
+
+.ru-page {
+  --ru-graphite: #1f2937;
+  --ru-slate: #3a4750;
+  --ru-line: #d8dce1;
+  --ru-surface: #f5f6f7;
+  --ru-amber: #f5a623;
+  --ru-amber-dark: #c9820a;
+
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+  background: var(--ru-surface);
+  font-family: "Inter", system-ui, sans-serif;
+  color: var(--ru-graphite);
+  box-sizing: border-box;
+}
+
+.ru-card {
+  width: 100%;
+  max-width: 380px;
+  background: #fff;
+  border: 1px solid var(--ru-line);
+  border-top: 4px solid var(--ru-amber);
+  border-radius: 6px;
+  padding: 32px 28px;
+  box-shadow: 0 1px 2px rgba(31, 41, 55, 0.04);
+}
+
+.ru-eyebrow {
+  margin: 0 0 4px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ru-slate);
+}
+
+.ru-title {
+  margin: 0 0 24px;
+  font-family: "Oswald", sans-serif;
+  font-weight: 600;
+  font-size: 26px;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--ru-graphite);
+}
+
+.ru-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ru-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ru-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ru-slate);
+}
+
+.ru-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 12px;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  color: var(--ru-graphite);
+  background: var(--ru-surface);
+  border: 1px solid var(--ru-line);
+  border-radius: 4px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ru-input::placeholder {
+  color: #9aa3ad;
+}
+
+.ru-input:focus {
+  outline: none;
+  border-color: var(--ru-amber-dark);
+  box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.22);
+  background: #fff;
+}
+
+.ru-btn {
+  margin-top: 4px;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  padding: 12px 18px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.05s ease;
+}
+
+.ru-btn:active {
+  transform: translateY(1px);
+}
+
+.ru-btn-primary {
+  width: 100%;
+  background: var(--ru-graphite);
+  color: #fff;
+  border-bottom: 3px solid var(--ru-amber);
+}
+
+.ru-btn-primary:hover {
+  filter: brightness(1.15);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 420px) {
+  .ru-card {
+    padding: 24px 20px;
+  }
+}

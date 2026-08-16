@@ -1,0 +1,64 @@
+/* ADMIN */
+.slider-admin {
+  padding: 20px;
+}
+
+.slider-admin input {
+  display: block;
+  margin: 10px 0;
+}
+
+.slider-list {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.slider-card {
+  width: 200px;
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.slider-card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+}
+
+.slider-card button {
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* HOME SLIDER */
+.home-slider {
+  width: 100%;
+  height: 420px;
+  position: relative;
+  overflow: hidden;
+  background: #000;
+}
+
+.home-slider img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: fade 1s ease-in-out;
+}
+
+.slider-title {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  color: white;
+  font-size: 24px;
+  background: rgba(0,0,0,0.5);
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+@keyframes fade {
+  from { opacity: 0.4; }
+  to { opacity: 1; }
+}

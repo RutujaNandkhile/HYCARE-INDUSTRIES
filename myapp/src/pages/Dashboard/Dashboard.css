@@ -1,0 +1,76 @@
+/* ===============================
+   GLOBAL RESET (Dashboard only)
+================================ */
+
+
+/* ===============================
+   SIDEBAR STYLING
+================================ */
+.bg-dark {
+  display: flex;
+  flex-direction: column;
+}
+
+/* User name */
+.bg-dark h4 {
+  font-size: 18px;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 10px;
+}
+
+/* Sidebar buttons */
+.bg-dark .btn-dark {
+  text-align: left;
+  padding-left: 15px;
+  transition: background-color 0.2s ease, padding-left 0.2s ease;
+}
+
+.bg-dark .btn-dark:hover {
+  background-color: #343a40;
+  padding-left: 20px;
+}
+
+/* ===============================
+   LOGOUT BUTTON (FIXED BOTTOM)
+================================ */
+.logout-button {
+  font-weight: 600;
+}
+
+/* Container holding logout */
+.mt-auto {
+  position: fixed;
+  bottom: 15px;
+  left: 15px;
+  width: 220px; /* sidebar width minus padding */
+  z-index: 1000;
+}
+
+/* Logout hover */
+.logout-button:hover {
+  background-color: #c82333;
+}
+
+/* ===============================
+   CONTENT AREA
+================================ */
+.flex-grow-1 {
+  background-color: #f8f9fc;
+  min-height: 100vh;
+}
+
+/* ===============================
+   RESPONSIVE (MOBILE)
+================================ */
+@media (max-width: 768px) {
+  .mt-auto {
+    position: static;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .bg-dark {
+    height: auto !important;
+  }
+}

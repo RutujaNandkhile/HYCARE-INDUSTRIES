@@ -1,0 +1,455 @@
+/* ================= HERO ================= */
+
+.hero {
+    height: 400px;
+    /* background: url("/img/hero.jpg") center/cover no-repeat; */
+    position: relative;
+    background: antiquewhite;
+}
+.hero-img {
+  height: 400px;          /* FIXED HEIGHT */
+  width: 100%;
+  object-fit: cover;      /* prevents distortion */
+  border-radius: 10px;    /* optional */
+}
+
+
+.overlay {
+  /* background: rgba(0, 0, 0, 0.6); */
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 80px;
+}
+
+.content {
+  color: #fff;
+  max-width: 600px;
+}
+
+.content h1 {
+  font-size: 64px;
+  font-weight: bold;
+}
+
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.btn {
+  background: #b45f06;
+  color: #fff;
+  border: none;
+  padding: 12px 30px;
+  cursor: pointer;
+}
+
+.play {
+  width: 50px;
+  height: 50px;
+  background: red;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+/* ================= ABOUT ================= */
+
+/* ===============================
+   GLOBAL
+=================================*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background:#cf556c;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* ===============================
+   HERO SECTION (Animated Gradient)
+=================================*/
+.hero-video-section {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(-45deg, #1e1e2f, #141420, #2c1e4a, #0f2027);
+  background-size: 400% 400%;
+  animation: gradientFlow 12s ease infinite;
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.hero-title {
+  font-size: 4rem;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 4px;
+  background: linear-gradient(90deg, #ffcc70, #ff8177, #cf556c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fadeUp 1.5s ease forwards;
+}
+
+.hero-title span {
+  display: block;
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+  margin-top: 15px;
+  color: #ccc;
+}
+
+/* ===============================
+   ABOUT SECTION (Glass Effect)
+=================================*/
+/* ===============================
+   Breadcrumb Section With Image
+=================================*/
+
+/* ===============================
+   Breadcrumb Section (About Only)
+=================================*/
+
+.breadcrumb-section {
+  position: relative;
+  padding: 120px 10%;
+  text-align: center;
+  color: #fff;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* .breadcrumb-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+} */
+
+.breadcrumb-container {
+  position: relative;
+  z-index: 2;
+}
+
+.breadcrumb-container h1 {
+  font-size: 45px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.breadcrumb {
+  font-size: 16px;
+}
+
+.breadcrumb a {
+  color: #ffcc70;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.breadcrumb a:hover {
+  color: #ffffff;
+}
+
+.breadcrumb .active {
+  color: #ddd;
+}
+/* //about section */
+
+/* ===============================
+   HYCARE INDUSTRIES THEME
+   Logo Based Color Palette
+================================= */
+
+.about-section {
+  padding: 90px 8%;
+  background-image: url('../assets/img/about-img.jpg');
+  text-align: center;
+}
+
+.about-sub {
+  color: #ff6a00;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.about-title {
+  font-size: 38px;
+  margin-bottom: 60px;
+  font-weight: 800;
+  color: #222;
+}
+
+/* GRID */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1.2fr 0.8fr;
+  gap: 50px;
+  align-items: center;
+  text-align: left;
+}
+
+/* IMAGE BOX */
+.about-image-box {
+  position: relative;
+}
+
+.about-image-box img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
+
+/* ORANGE CARD */
+.about-orange-card {
+  position: absolute;
+  left: -30px;
+  bottom: 40px;
+  background: #ff6a00;
+  color: white;
+  padding: 35px;
+  width: 250px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+.about-orange-card .icon {
+  font-size: 26px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* CONTENT */
+.about-content p {
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.about-content ul {
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+.about-content li {
+  list-style: none;
+  margin-bottom: 10px;
+  position: relative;
+  padding-left: 20px;
+}
+
+.about-content li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #ff6a00;
+}
+
+.about-btn {
+  padding: 14px 28px;
+  border: 2px solid #ff6a00;
+  background: transparent;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.about-btn:hover {
+  background: #ff6a00;
+  color: white;
+}
+
+/* STATS */
+.about-stats h3 {
+  font-size: 46px;
+  margin-bottom: 5px;
+}
+
+.about-stats p {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+/* MOBILE */
+@media(max-width: 900px){
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-orange-card {
+    left: 20px;
+    bottom: 20px;
+  }
+
+  .about-title {
+    font-size: 28px;
+  }
+}
+/* ===============================
+   RESPONSIVE
+================================= */
+
+@media (max-width: 992px) {
+  .about-wrap {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-images {
+    margin-bottom: 40px;
+  }
+}
+
+@media (max-width: 576px) {
+  .about-images {
+    width: 100%;
+    height: auto;
+  }
+
+  .about-images .img {
+    position: relative;
+    width: 90%;
+    height: auto;
+    margin: 10px auto;
+    display: block;
+  }
+
+  .about-content {
+    padding: 30px;
+  }
+
+  .about-content h2 {
+    font-size: 28px;
+  }
+}
+
+/* ===============================
+   SERVICES SECTION
+=================================*/
+.services {
+  padding: 120px 10%;
+  background: linear-gradient(135deg, #111, #1b1b2e);
+}
+
+.services-head {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.services-head h2 {
+  font-size: 40px;
+  margin-bottom: 15px;
+  background: linear-gradient(90deg, #ffcc70, #ff8177);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.services-head p {
+  color: #aaa;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.service-card {
+  padding: 40px 30px;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  transition: 0.5s;
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, #ff8177, #ffcc70, #cf556c);
+  top: -150%;
+  left: -150%;
+  transition: 0.6s;
+  z-index: 0;
+  opacity: 0.1;
+}
+
+.service-card:hover::before {
+  top: -50%;
+  left: -50%;
+}
+
+.service-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 20px 40px rgba(255, 129, 119, 0.3);
+}
+
+.service-card h3 {
+  margin-bottom: 15px;
+  font-size: 22px;
+}
+
+.service-card p {
+  color: #ccc;
+  font-size: 14px;
+}
+
+/* ===============================
+   ANIMATIONS
+=================================*/
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===============================
+   RESPONSIVE
+=================================*/
+@media (max-width: 992px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about-wrap {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-content {
+    padding: 30px;
+  }
+}

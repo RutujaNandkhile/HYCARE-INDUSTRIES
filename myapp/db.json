@@ -1,0 +1,94 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Admin",
+      "email": "admin@gmail.com",
+      "password": "123456",
+      "role": "admin"
+    },
+    {
+      "id": "2351",
+      "name": "Rutuja",
+      "email": "rutujanandkhile1@gmail.com",
+      "password": "12345",
+      "role": "user"
+    },
+    {
+      "id": "1f55",
+      "name": "Rutuja",
+      "email": "rutuja1@gmail.com",
+      "password": "1234"
+    },
+    {
+      "id": "88df",
+      "name": "Rutuja Nandkhile",
+      "email": "rutu1@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "8d54",
+      "name": "nikita",
+      "email": "nikita@gmail.com",
+      "password": "1234"
+    },
+    {
+      "id": "26e9",
+      "name": "Rutuja Nandkhile",
+      "email": "rutuja1@gmail.com",
+      "password": "1234"
+    },
+    {
+      "id": "5a89",
+      "name": "Rutuja Nandkhile",
+      "email": "rutujanandkhile17@gmail.com",
+      "password": "rutuja"
+    },
+    {
+      "id": "490d",
+      "name": "vrushali@gmail.com",
+      "email": "vrushali@gmail.com",
+      "password": "12345"
+    },
+    {
+      "id": "a993",
+      "name": "Rutuja Nandkhile",
+      "email": "rutujanandkhile17@gmail.com",
+      "password": "12345"
+    }
+  ],
+  "sliders": [
+    {
+      "id": "1",
+      "image": "https://picsum.photos/1200/400?1"
+    },
+    {
+      "id": "1f34",
+      "title": "",
+      "image": "",
+      "status": true
+    }
+  ],
+  "photos": [],
+  "contacts": [
+    {
+      "id": "7827",
+      "email": "rutujanandkhile17@gmail.com",
+      "name": "Rutuja Nandkhile",
+      "message": "xx"
+    },
+    {
+      "id": "1dd5",
+      "email": "rutujanandkhile17@gmail.com",
+      "name": "Rutuja Nandkhile",
+      "message": "dd"
+    },
+    {
+      "id": "d132",
+      "name": "Rutuja Nandkhile",
+      "email": "rutujanandkhile17@gmail.com",
+      "phone": "+91 93563-71502",
+      "message": "swee"
+    }
+  ]
+}
