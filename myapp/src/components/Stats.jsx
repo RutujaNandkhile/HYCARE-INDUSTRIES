@@ -1,11 +1,10 @@
 import "./Stats.css";
 import { motion } from "framer-motion";
 
-import img1 from "../assets/img/spot1.jpg";
-import img2 from "../assets/img/spot2.webp";
-import img3 from "../assets/img/spot3.jpg";
-import img4 from "../assets/img/spot4.jpg";
-
+import img1 from "../assets/img/spot1.JPG";
+import img2 from "../assets/img/spot2.WEBP";
+import img3 from "../assets/img/spot3.JPG";
+import img4 from "../assets/img/spot4.JPG";
 const Stats = () => {
   return (
     <section className="stats">
