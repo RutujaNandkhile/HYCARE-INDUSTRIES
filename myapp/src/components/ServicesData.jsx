@@ -8,7 +8,7 @@ import {
 } from "react-icons/fa";
 
 import img1 from "../assets/img/cnc.jpg";
-import img2 from "../assets/img/spot1.jpg";
+import img2 from "../assets/img/spot1.JPG";
 import img3 from "../assets/img/spring.jpg";
 import img4 from "../assets/img/fabrication.jpg";
 import img5 from "../assets/img/5axis.jpg";
