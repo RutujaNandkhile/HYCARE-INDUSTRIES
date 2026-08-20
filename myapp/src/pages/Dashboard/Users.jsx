@@ -1,140 +1,244 @@
-import React,{useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
 
 import {
-getUsers,
-deleteUser,
-updateUser
+  getUsers,
+  deleteUser,
+  updateUser,
 } from "../../services/userService";
 
 import "./Users.css";
 
-const Users=()=>{
+const Users = () => {
+  const [users, setUsers] = useState([]);
+  const [editUser, setEditUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-const[users,setUsers]=useState([]);
-const[editUser,setEditUser]=useState(null);
+  useEffect(() => {
+    loadUsers();
+  }, []);
 
-useEffect(()=>{
-loadUsers();
-},[]);
+  const loadUsers = async () => {
+    try {
+      setLoading(true);
+      setError("");
 
-const loadUsers=async()=>{
-const res=await getUsers();
-setUsers(res.data);
-};
+      const res = await getUsers();
 
-const handleDelete=async(id)=>{
+      console.log("Users:", res.data);
 
-if(window.confirm("Delete user?")){
+      setUsers(Array.isArray(res.data) ? res.data : []);
+    } catch (error) {
+      console.error("Get Users Error:", error);
 
-await deleteUser(id);
+      setError(
+        error.response?.data?.message ||
+          "Unable to load users"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
-loadUsers();
-}
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this user?")) {
+      return;
+    }
 
-};
+    try {
+      await deleteUser(id);
 
-const handleUpdate=async()=>{
+      alert("User deleted successfully");
 
-await updateUser(editUser._id,editUser);
+      loadUsers();
+    } catch (error) {
+      console.error("Delete Error:", error);
 
-setEditUser(null);
+      alert(
+        error.response?.data?.message ||
+          "Unable to delete user"
+      );
+    }
+  };
 
-loadUsers();
+  const handleUpdate = async () => {
+    try {
+      await updateUser(editUser._id, {
+        name: editUser.name,
+        email: editUser.email,
+      });
 
-};
+      alert("User updated successfully");
 
-return(
+      setEditUser(null);
 
-<div className="container">
+      loadUsers();
+    } catch (error) {
+      console.error("Update Error:", error);
 
-<h3>User Dashboard</h3>
+      alert(
+        error.response?.data?.message ||
+          "Unable to update user"
+      );
+    }
+  };
 
-{editUser && (
+  return (
+    <div className="container mt-4">
 
-<div>
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h3>User Dashboard</h3>
 
-<input
-value={editUser.name}
-onChange={(e)=>
-setEditUser({...editUser,name:e.target.value})
-}
-/>
+        <button
+          className="btn btn-primary"
+          onClick={loadUsers}
+        >
+          Refresh
+        </button>
+      </div>
 
-<input
-value={editUser.email}
-onChange={(e)=>
-setEditUser({...editUser,email:e.target.value})
-}
-/>
+      {error && (
+        <div className="alert alert-danger">
+          {error}
+        </div>
+      )}
 
-<input
-value={editUser.password}
-onChange={(e)=>
-setEditUser({...editUser,password:e.target.value})
-}
-/>
+      {loading ? (
+        <div className="text-center py-4">
+          <h5>Loading users...</h5>
+        </div>
+      ) : (
+        <>
+          {editUser && (
+            <div className="card p-3 mb-4">
 
-<button onClick={handleUpdate}>
-Update
-</button>
+              <h5>Edit User</h5>
 
-</div>
+              <input
+                className="form-control mb-2"
+                type="text"
+                value={editUser.name || ""}
+                placeholder="Name"
+                onChange={(e) =>
+                  setEditUser({
+                    ...editUser,
+                    name: e.target.value,
+                  })
+                }
+              />
 
-)}
+              <input
+                className="form-control mb-3"
+                type="email"
+                value={editUser.email || ""}
+                placeholder="Email"
+                onChange={(e) =>
+                  setEditUser({
+                    ...editUser,
+                    email: e.target.value,
+                  })
+                }
+              />
 
-<table className="table">
+              <div>
+                <button
+                  className="btn btn-success me-2"
+                  onClick={handleUpdate}
+                >
+                  Update
+                </button>
 
-<thead>
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => setEditUser(null)}
+                >
+                  Cancel
+                </button>
+              </div>
 
-<tr>
+            </div>
+          )}
 
-<th>ID</th>
-<th>Name</th>
-<th>Email</th>
-<th>Password</th>
-<th>Action</th>
+          <div className="table-responsive">
 
-</tr>
+            <table className="table table-bordered table-striped">
 
-</thead>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>User ID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Created</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
 
-<tbody>
+              <tbody>
 
-{users.map((u)=>(
-<tr key={u._id}>
+                {users.length === 0 ? (
+                  <tr>
+                    <td
+                      colSpan="6"
+                      className="text-center"
+                    >
+                      No users found
+                    </td>
+                  </tr>
+                ) : (
+                  users.map((user, index) => (
+                    <tr key={user._id}>
 
-<td>{u._id}</td>
-<td>{u.name}</td>
-<td>{u.email}</td>
-<td>{u.password}</td>
+                      <td>{index + 1}</td>
 
-<td>
+                      <td>{user._id}</td>
 
-<button
-onClick={()=>setEditUser(u)}
->
-Edit
-</button>
+                      <td>{user.name}</td>
 
-<button
-onClick={()=>handleDelete(u._id)}
->
-Delete
-</button>
+                      <td>{user.email}</td>
 
-</td>
+                      <td>
+                        {user.createdAt
+                          ? new Date(
+                              user.createdAt
+                            ).toLocaleDateString()
+                          : "-"}
+                      </td>
 
-</tr>
-))}
+                      <td>
+                        <button
+                          className="btn btn-warning btn-sm me-2"
+                          onClick={() =>
+                            setEditUser(user)
+                          }
+                        >
+                          Edit
+                        </button>
 
-</tbody>
+                        <button
+                          className="btn btn-danger btn-sm"
+                          onClick={() =>
+                            handleDelete(user._id)
+                          }
+                        >
+                          Delete
+                        </button>
+                      </td>
 
-</table>
+                    </tr>
+                  ))
+                )}
 
-</div>
+              </tbody>
 
-);
+            </table>
 
+          </div>
+        </>
+      )}
+
+    </div>
+  );
 };
 
 export default Users;

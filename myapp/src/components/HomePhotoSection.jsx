@@ -78,7 +78,7 @@ const HomePhotoSection = () => {
               >
                 <div className={`card-inner ${isCenter ? "active-glow" : ""}`}>
                   <img 
-                    src={`http://localhost:5000/uploads/${photo.image}`} 
+                   src={`${import.meta.env.VITE_API_URL}/uploads/${photo.image}`}
                     alt={photo.title} 
                     className="card-image"
                   />
