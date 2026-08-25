@@ -3,6 +3,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 
 const userRoutes = require("../routes/userRoutes");
+const photoRoutes = require("../routes/photoRoutes");
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use("/uploads", express.static("uploads"));
 
 // ========================================
 // MONGODB
@@ -32,23 +34,26 @@ const connectDB = async () => {
   }
 
   try {
-    await mongoose.connect(
-      process.env.MONGO_URI
-    );
+    await mongoose.connect(process.env.MONGO_URI);
 
     isConnected = true;
 
-    console.log(
-      "MongoDB connected"
-    );
-
+    console.log("MongoDB connected");
   } catch (error) {
-    console.error(
-      "MongoDB connection error:",
-      error
-    );
-
+    console.error("MongoDB connection error:", error);
     throw error;
+  }
+};
+
+// Reusable middleware: make sure DB is connected before any route runs
+const ensureDB = async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    res.status(500).json({
+      message: "Database connection failed",
+    });
   }
 };
 
@@ -68,21 +73,13 @@ app.get("/", async (req, res) => {
 // USERS
 // ========================================
 
-app.use(
-  "/users",
-  async (req, res, next) => {
-    try {
-      await connectDB();
-      next();
-    } catch (error) {
-      res.status(500).json({
-        message:
-          "Database connection failed",
-      });
-    }
-  },
-  userRoutes
-);
+app.use("/users", ensureDB, userRoutes);
+
+// ========================================
+// PHOTOS
+// ========================================
+
+app.use("/photos", ensureDB, photoRoutes);
 
 // ========================================
 // EXPORT

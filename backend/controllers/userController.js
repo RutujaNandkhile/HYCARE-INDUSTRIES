@@ -1,19 +1,7 @@
 const User = require("../models/userModel");
 const Otp = require("../models/Otp");
 const bcrypt = require("bcryptjs");
-const nodemailer = require("nodemailer");
-
-// ==========================================
-// EMAIL TRANSPORTER
-// ==========================================
-
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+const sendOtpMail = require("../utils/sendOtpMail");
 
 // ==========================================
 // GENERATE OTP
@@ -62,12 +50,7 @@ const registerUser = async (req, res) => {
       },
     });
 
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: "Registration OTP",
-      text: `Your registration OTP is ${otp}`,
-    });
+    await sendOtpMail(email, otp);
 
     res.status(200).json({
       message: "OTP sent to your email",
@@ -79,6 +62,8 @@ const registerUser = async (req, res) => {
 
     res.status(500).json({
       message: "Registration failed",
+      // Remove this line once things are stable in production
+      debug: error.message,
     });
   }
 };
@@ -137,6 +122,7 @@ const verifyRegisterOtp = async (req, res) => {
 
     res.status(500).json({
       message: "OTP verification failed",
+      debug: error.message,
     });
   }
 };
@@ -177,8 +163,6 @@ const loginUser = async (req, res) => {
     // =========================================
     // CHECK 1 MONTH
     // =========================================
-
-    const now = new Date();
 
     const oneMonthAgo = new Date();
 
@@ -222,12 +206,7 @@ const loginUser = async (req, res) => {
       type: "login",
     });
 
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: "Login Verification OTP",
-      text: `Your login verification OTP is ${otp}`,
-    });
+    await sendOtpMail(email, otp);
 
     return res.status(200).json({
       message:
@@ -240,6 +219,7 @@ const loginUser = async (req, res) => {
 
     return res.status(500).json({
       message: "Login failed",
+      debug: error.message,
     });
   }
 };
@@ -300,6 +280,7 @@ const verifyLoginOtp = async (req, res) => {
 
     return res.status(500).json({
       message: "OTP verification failed",
+      debug: error.message,
     });
   }
 };
@@ -332,12 +313,7 @@ const resendOtp = async (req, res) => {
 
     await oldOtp.save();
 
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: "Resend OTP",
-      text: `Your new OTP is ${otp}`,
-    });
+    await sendOtpMail(email, otp);
 
     res.status(200).json({
       message: "OTP resent successfully",
@@ -348,6 +324,7 @@ const resendOtp = async (req, res) => {
 
     res.status(500).json({
       message: "Could not resend OTP",
+      debug: error.message,
     });
   }
 };
