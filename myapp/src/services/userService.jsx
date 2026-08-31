@@ -2,23 +2,56 @@ import axios from "axios";
 
 const API_URL = `${import.meta.env.VITE_API_URL}/users`;
 
-export const addUser = (user) =>
-  axios.post(`${API_URL}/register`, user);
+const api = axios.create({
+  baseURL: API_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
-export const verifyRegisterOtp = (data) =>
-  axios.post(`${API_URL}/verify-register-otp`, data);
+export const addUser = async (user) => {
+  return api.post("/register", {
+    name: user.name.trim(),
+    email: user.email.trim().toLowerCase(),
+    password: user.password,
+  });
+};
 
-export const loginUser = (email, password) =>
-  axios.post(`${API_URL}/login`, { email, password });
+export const verifyRegisterOtp = async ({ email, otp }) => {
+  return api.post("/verify-register-otp", {
+    email: email.trim().toLowerCase(),
+    otp: String(otp).trim(),
+  });
+};
 
-export const verifyLoginOtp = (data) =>
-  axios.post(`${API_URL}/verify-login-otp`, data);
+export const loginUser = async (email, password) => {
+  return api.post("/login", {
+    email: email.trim().toLowerCase(),
+    password,
+  });
+};
 
-export const resendOtp = (email) =>
-  axios.post(`${API_URL}/resend-otp`, { email });
+export const verifyLoginOtp = async ({ email, otp }) => {
+  return api.post("/verify-login-otp", {
+    email: email.trim().toLowerCase(),
+    otp: String(otp).trim(),
+  });
+};
 
-export const getUsers = () => axios.get(API_URL);
+export const resendOtp = async (email) => {
+  return api.post("/resend-otp", {
+    email: email.trim().toLowerCase(),
+  });
+};
 
-export const deleteUser = (id) => axios.delete(`${API_URL}/${id}`);
+export const getUsers = async () => {
+  return api.get("/");
+};
 
-export const updateUser = (id, user) => axios.put(`${API_URL}/${id}`, user);
+export const deleteUser = async (id) => {
+  return api.delete(`/${id}`);
+};
+
+export const updateUser = async (id, user) => {
+  return api.put(`/${id}`, user);
+};

@@ -138,10 +138,11 @@ app.use((err, req, res, next) => {
 // ========================================
 
 if (require.main === module) {
-  const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => {
-    console.log(`Local server running on http://localhost:${PORT}`);
-  });
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Local server running on http://localhost:${PORT}`);
+});
 }
 
 module.exports = app;
