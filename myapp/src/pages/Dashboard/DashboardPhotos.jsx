@@ -130,7 +130,7 @@ const DashboardPhotos = () => {
               <tr key={p._id}>
                 <td>
                   <img
-                    src={`${import.meta.env.VITE_API_URL}/uploads/${p.image}`}
+                    src={p.image}
                     className="photo-thumb"
                     alt={p.title}
                   />
