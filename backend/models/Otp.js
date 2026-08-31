@@ -5,6 +5,9 @@ const otpSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
+      lowercase: true,
+      trim: true,
+      index: true,
     },
 
     otp: {
@@ -14,22 +17,41 @@ const otpSchema = new mongoose.Schema(
 
     type: {
       type: String,
-      enum: ["register", "login"],
+
+      enum: [
+        "register",
+        "login",
+      ],
+
       required: true,
     },
 
     userData: {
-      name: String,
-      email: String,
-      password: String,
+      name: {
+        type: String,
+        trim: true,
+      },
+
+      email: {
+        type: String,
+        lowercase: true,
+        trim: true,
+      },
+
+      password: {
+        type: String,
+      },
     },
 
     createdAt: {
       type: Date,
+
       default: Date.now,
+
       expires: 600,
     },
   }
 );
 
-module.exports = mongoose.model("Otp", otpSchema);
+module.exports =
+  mongoose.model("Otp", otpSchema);

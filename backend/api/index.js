@@ -7,67 +7,132 @@ const mongoose = require("mongoose");
 const app = express();
 
 // ========================================
-// CORS — हे सर्वात आधी लावा, कोणताही route
-// लोड होण्याआधी. यामुळे पुढे कुठलाही route
-// क्रॅश झाला तरी किमान CORS headers तरी
-// आधीच attach झालेले राहतात.
+// CORS
 // ========================================
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://hycare-industries-vuqh.vercel.app",
-  // इथे तुमचं deploy झालेलं FRONTEND URL टाका, उदा:
-  // "https://hycare-frontend.vercel.app",
+  "https://hycare-industries-web.vercel.app",
 ];
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Postman / server-to-server सारख्या no-origin request्ससाठी allow
-      if (!origin) return callback(null, true);
+      // Postman / server-to-server
+      if (!origin) {
+        return callback(null, true);
+      }
 
       if (allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
 
       console.warn("Blocked by CORS:", origin);
+
       return callback(new Error("Not allowed by CORS"));
     },
+
     credentials: true,
   })
 );
 
+// ========================================
+// BODY PARSER
+// ========================================
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// ========================================
+// UPLOADS
+// ========================================
+
 app.use("/uploads", express.static("uploads"));
 
 // ========================================
-// MONGODB
+// ENV CHECK
+// ========================================
+
+console.log("=================================");
+console.log("Environment Check");
+console.log("=================================");
+
+console.log(
+  "MONGO_URI:",
+  process.env.MONGO_URI ? "Loaded" : "Missing"
+);
+
+console.log(
+  "RESEND_API_KEY:",
+  process.env.RESEND_API_KEY ? "Loaded" : "Missing"
+);
+
+console.log(
+  "RESEND_FROM_EMAIL:",
+  process.env.RESEND_FROM_EMAIL || "Missing"
+);
+
+console.log(
+  "FRONTEND_URL:",
+  process.env.FRONTEND_URL || "Missing"
+);
+
+console.log("=================================");
+
+// ========================================
+// MONGODB ATLAS
 // ========================================
 
 let isConnected = false;
 
 const connectDB = async () => {
-  if (isConnected) return;
+  if (
+    isConnected &&
+    mongoose.connection.readyState === 1
+  ) {
+    return;
+  }
 
   try {
+    if (!process.env.MONGO_URI) {
+      throw new Error("MONGO_URI is missing");
+    }
+
     await mongoose.connect(process.env.MONGO_URI);
+
     isConnected = true;
-    console.log("MongoDB connected");
+
+    console.log("✅ MongoDB Atlas connected successfully");
   } catch (error) {
-    console.error("MongoDB connection error:", error);
+    isConnected = false;
+
+    console.error(
+      "❌ MongoDB Atlas connection error:",
+      error.message
+    );
+
     throw error;
   }
 };
 
+// ========================================
+// DATABASE MIDDLEWARE
+// ========================================
+
 const ensureDB = async (req, res, next) => {
   try {
     await connectDB();
+
     next();
   } catch (error) {
-    res.status(500).json({
+    console.error(
+      "Database middleware error:",
+      error.message
+    );
+
+    return res.status(500).json({
+      success: false,
       message: "Database connection failed",
-      debug: error.message,
     });
   }
 };
@@ -76,73 +141,108 @@ const ensureDB = async (req, res, next) => {
 // ROOT
 // ========================================
 
-app.get("/", async (req, res) => {
-  res.json({ message: "HYCARE Backend is running" });
+app.get("/", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "HYCARE Backend is running",
+  });
 });
 
 // ========================================
-// ROUTES — try/catch मध्ये लोड करा, जेणेकरून
-// एखादं dependency (उदा. cloudinary/multer)
-// missing असेल तर स्पष्ट error दिसेल, आणि
-// संपूर्ण app silently क्रॅश होणार नाही.
+// USER ROUTES
 // ========================================
 
 try {
   const userRoutes = require("../routes/userRoutes");
+
   app.use("/users", ensureDB, userRoutes);
+
+  console.log("✅ User routes loaded successfully");
 } catch (error) {
-  console.error("Failed to load userRoutes:", error);
+  console.error(
+    "❌ Failed to load userRoutes:",
+    error.message
+  );
+
   app.use("/users", (req, res) => {
     res.status(500).json({
-      message: "userRoutes failed to load",
+      success: false,
+      message: "User routes failed to load",
       debug: error.message,
     });
   });
 }
+
+// ========================================
+// PHOTO ROUTES
+// ========================================
 
 try {
   const photoRoutes = require("../routes/photoRoutes");
+
   app.use("/photos", ensureDB, photoRoutes);
+
+  console.log("✅ Photo routes loaded successfully");
 } catch (error) {
-  console.error("Failed to load photoRoutes:", error);
+  console.error(
+    "❌ Failed to load photoRoutes:",
+    error.message
+  );
+
   app.use("/photos", (req, res) => {
     res.status(500).json({
-      message: "photoRoutes failed to load",
+      success: false,
+      message: "Photo routes failed to load",
       debug: error.message,
     });
   });
 }
 
 // ========================================
-// 404 HANDLER
+// 404
 // ========================================
 
 app.use((req, res) => {
-  res.status(404).json({ message: "Route not found" });
+  res.status(404).json({
+    success: false,
+    message: "Route not found",
+  });
 });
 
 // ========================================
-// ERROR HANDLER
+// GLOBAL ERROR
 // ========================================
 
 app.use((err, req, res, next) => {
   console.error("Unhandled error:", err);
+
   res.status(500).json({
+    success: false,
     message: "Internal server error",
-    debug: err.message,
+
+    debug:
+      process.env.NODE_ENV === "production"
+        ? undefined
+        : err.message,
   });
 });
 
 // ========================================
-// LOCAL DEV ONLY
+// LOCAL SERVER
 // ========================================
 
 if (require.main === module) {
-const PORT = process.env.PORT || 5000;
+  const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`Local server running on http://localhost:${PORT}`);
-});
+  app.listen(PORT, () => {
+    console.log(
+      `🚀 Local server running on http://localhost:${PORT}`
+    );
+  });
 }
+
+// ========================================
+// VERCEL
+// ========================================
 
 module.exports = app;
