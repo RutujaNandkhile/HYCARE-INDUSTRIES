@@ -1,30 +1,38 @@
-require("dotenv").config();
-
 const express = require("express");
 const cors = require("cors");
-const connectDB = require("./config/db");
+const dotenv = require("dotenv");
 
-const userRoutes = require("./routes/userRoutes");
-const photoRoutes = require("./routes/photoRoutes");
+dotenv.config();
 
 const app = express();
 
-connectDB();
+app.use(
+  cors({
+    origin: [
+      "https://hycare-industries-web.vercel.app",
+      "http://localhost:5173",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
 
-app.use(cors());
+app.options("*", cors());
+
 app.use(express.json());
-app.use("/uploads", express.static("uploads"));
+app.use(express.urlencoded({ extended: true }));
 
-app.use("/users", userRoutes);
-app.use("/photos", photoRoutes);
+// Routes
+app.use("/users", require("./routes/userRoutes"));
+app.use("/photos", require("./routes/photoRoutes"));
 
 app.get("/", (req, res) => {
-  res.json({ message: "API is running successfully" });
+  res.json({ message: "API is working" });
 });
 
 const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
-module.exports = app;
