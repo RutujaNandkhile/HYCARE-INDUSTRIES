@@ -1,11 +1,11 @@
 const express = require("express");
 
 const {
-  getPhotos,
-  addPhoto,
-  updatePhoto,
-  deletePhoto,
-} = require("../controllers/photoController");
+  getSliders,
+  addSlider,
+  updateSlider,
+  deleteSlider,
+} = require("../controllers/sliderController");
 
 const upload = require("../middleware/upload");
 
@@ -13,30 +13,26 @@ const protect = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-// GET ALL PHOTOS
-router.get("/", getPhotos);
+router.get("/", getSliders);
 
-// ADD PHOTO
 router.post(
   "/",
   protect,
   upload.single("image"),
-  addPhoto
+  addSlider
 );
 
-// UPDATE PHOTO
 router.put(
   "/:id",
   protect,
   upload.single("image"),
-  updatePhoto
+  updateSlider
 );
 
-// DELETE PHOTO
 router.delete(
   "/:id",
   protect,
-  deletePhoto
+  deleteSlider
 );
 
 module.exports = router;

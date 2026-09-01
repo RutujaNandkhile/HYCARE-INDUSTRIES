@@ -1,14 +1,41 @@
 const mongoose = require("mongoose");
 
-const photoSchema = new mongoose.Schema({
-  title: String,
-  category: String,
-  image: String, // full Cloudinary secure_url
-  imagePublicId: String, // Cloudinary public_id, needed to delete the image later
-  createdAt: {
-    type: Date,
-    default: Date.now,
+const categories = [
+  "CNC STRENGTH",
+  "VMC STRENGTH",
+  "INBUILD MACHINERY",
+  "JOB'S",
+  "SPOT WELDING ELECTRODES",
+  "SPRINGS JOB'S",
+];
+
+const photoSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    category: {
+      type: String,
+      required: true,
+      enum: categories,
+    },
+
+    image: {
+      type: String,
+      required: true,
+    },
+
+    imagePublicId: {
+      type: String,
+      required: true,
+    },
   },
-});
+  {
+    timestamps: true,
+  }
+);
 
 module.exports = mongoose.model("Photo", photoSchema);
